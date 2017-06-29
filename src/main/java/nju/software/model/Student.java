@@ -1,7 +1,11 @@
 package nju.software.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by ZhangYF on 2017/5/26.
@@ -13,6 +17,7 @@ public class Student implements Serializable{
     private String name;
     private String password;
     private String gender;
+    private List<StudCour> studCours;
 
     @Id
     @Column(name = "studentid", nullable = false)
@@ -52,6 +57,16 @@ public class Student implements Serializable{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    @OneToMany(mappedBy = "student")
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    public List<StudCour> getStudCours() {
+        return studCours;
+    }
+
+    public void setStudCours(List<StudCour> studCours) {
+        this.studCours = studCours;
     }
 
     @Override
